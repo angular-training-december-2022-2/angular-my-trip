@@ -1,0 +1,71 @@
+<div class="container align-center m-5">
+    <h2>BUS INFORMATION</h2>
+    <div class="card" style="width:1300px">
+        <!-- Carousel -->
+        <div id="demo" class="carousel slide" data-bs-ride="carousel">
+
+            <!-- Indicators/dots -->
+            <div class="carousel-indicators">
+            <button type="button" data-bs-target="#demo" data-bs-slide-to="0" class="active"></button>
+            <button type="button" data-bs-target="#demo" data-bs-slide-to="1"></button>
+            <button type="button" data-bs-target="#demo" data-bs-slide-to="2"></button>
+            </div>
+        
+            <!-- The slideshow/carousel -->
+            <div class="carousel-inner">
+            <div class="carousel-item active" *ngFor="let images of fetchedBus.busImageUrl">
+                <img [src]="images" alt="Los Angeles" class="d-block w-100" width="200px" height="400px">
+            </div>
+            </div>
+        
+            <!-- Left and right controls/icons -->
+            <button class="carousel-control-prev" type="button" data-bs-target="#demo" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon"></span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#demo" data-bs-slide="next">
+            <span class="carousel-control-next-icon"></span>
+            </button>
+        </div>
+    </div>
+    <div class="card-body mt-3">
+        <h4>Travels Name: {{ fetchedBus.busName }}</h4>
+        <p>Bus ID: {{ fetchedBus.id }}</p>
+        <p>From City: 
+            <span *ngFor="let city of allCities">
+                <span *ngIf="city.id==fetchedBus.busFromId">{{ city.cityName }}</span>
+            </span>
+        </p>
+        <p>To City: 
+            <span *ngFor="let city of allCities">
+                <span *ngIf="city.id==fetchedBus.busToId">{{ city.cityName }}</span>
+            </span>
+        </p>
+        <p>Bus Ticket Fare: Rs. {{ fetchedBus.busTicketFare }}</p>
+        <p>Bus Total Seats: {{ fetchedBus.busTotalSeats }}</p>
+        <div class="card">
+            <h5>ROUTE DETAILS:</h5>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>BUS ROUTE ID</th>
+                        <th>TRAVEL DATE</th>
+                        <th>DEPARTURE TIME</th>
+                        <th>SEATS LEFT</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let busRoute of allRoute">
+                        <td>{{ busRoute.id }}</td>
+                        <td>{{ busRoute.busTravelDateTime | date }}</td>
+                        <td>{{ busRoute.busTravelDateTime | date:'hh:mm a' }}</td>
+                        <td>{{ fetchedBus.busTotalSeats - busRoute.busSeatsTaken.length }}</td>
+                        <td><button type="button" class="btn btn-primary" (click)="gotoSeatLayout(busRoute.id)">Book Tickets</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+

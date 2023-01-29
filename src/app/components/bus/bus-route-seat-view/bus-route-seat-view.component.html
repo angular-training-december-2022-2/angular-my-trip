@@ -1,0 +1,80 @@
+<div class="container m-5">
+    <div class="card">
+        <div class="card-header bg-warning text-light">
+            <h2>Book Bus Tickets</h2>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-4">
+                    <div class="card">
+                        <div class="card-header">
+                            Seat Layout
+                        </div>
+                        <div class="card-body">
+                            <div class="border border-dark m-5">
+                                <span *ngFor="let n of totalSeats">
+                                    <button type="button" class="btn btn-danger" *ngIf="displaySeat(n)=='RED'" disabled>
+                                        <img src="../../../../assets/images/seat.png" width="30px" height="30px">
+                                    </button>
+                                    <button type="button" class="btn btn-light" *ngIf="displaySeat(n)=='GREEN'" (click)="addToSelectedSeats(n)">
+                                        <img src="../../../../assets/images/seat.png" width="30px" height="30px">
+                                    </button>
+                                    <button type="button" class="btn btn-success" *ngIf="displaySeat(n)=='BLUE'" (click)="addToSelectedSeats(n)">
+                                        <img src="../../../../assets/images/seat.png" width="30px" height="30px">
+                                    </button>
+                                    <span *ngIf="n%2==0 && !(n%4==0)">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                                    <div *ngIf="n%4==0"></div>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-8">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5>BUS INFORMATION</h5>
+                        </div>
+                        <div class="card-body mt-3">
+                            <h4>Travels Name: {{ fetchedBus.busName }}</h4>
+                            <p>Bus ID: {{ fetchedBus.id }}</p>
+                            <p>From City: 
+                                <span *ngFor="let city of allCities">
+                                    <span *ngIf="city.id==fetchedBus.busFromId">{{ city.cityName }}</span>
+                                </span>
+                            </p>
+                            <p>To City: 
+                                <span *ngFor="let city of allCities">
+                                    <span *ngIf="city.id==fetchedBus.busToId">{{ city.cityName }}</span>
+                                </span>
+                            </p>
+                            <p>Bus Ticket Fare: Rs. {{ fetchedBus.busTicketFare }}</p>
+                            <p>Bus Total Seats: {{ fetchedBus.busTotalSeats }}</p>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header">
+                            <h5>SEATS SELECTED</h5>
+                        </div>
+                        <div class="card-body">
+                            <p>
+                                Total Seats Selected: {{ selectedSeats.length }}
+                            </p>
+                            <p>
+                                Seats Selected: 
+                                <span *ngFor="let seat of selectedSeats">
+                                    {{ seat }},
+                                </span>
+                            </p>
+                            <p>
+                                Total Cost: Rs. {{ selectedSeats.length * fetchedBus.busTicketFare}}
+                            </p>
+                            <div>
+                                <button type="button" class="btn btn-success" (click)="reserveTickets()">Reserve Tickets</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
